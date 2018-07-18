@@ -1,0 +1,13 @@
+name: macro_transpile
+version: 0.1.0
+
+authors:
+  - Brecert <11599528+Brecert@users.noreply.github.com>
+
+targets:
+  macro_transpile:
+    main: src/macro_transpile.cr
+
+crystal: 0.25.0
+
+license: MIT
