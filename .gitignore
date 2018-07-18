@@ -3,5 +3,5 @@
 /bin/
 /.shards/
 *.dwarf
-sentry
-macro_transpile
+./sentry
+./macro_transpile
