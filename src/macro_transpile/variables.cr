@@ -6,7 +6,7 @@ module MacroTranspile
     # end
 
     private def transpile(node : Crystal::TypeDeclaration)
-      @@log.debug "#{node.declared_type}"
+      @@log.debug "TypeDeclaration: #{node.declared_type}"
       assign(node.var.to_s, node.declared_type)
       ""
     end
@@ -56,14 +56,22 @@ module MacroTranspile
         value << '@'
       end
 
-      if get(node.to_s).class == Crystal::NumberLiteral
+      case get(node.to_s)
+      when Crystal::NumberLiteral, Number
         value << '#' << name
-      elsif get(node.to_s).class == Crystal::StringLiteral
+      when Crystal::StringLiteral, String
         value << '&' << name
-      elsif get(node.to_s).class == Crystal::BoolLiteral
+      when Crystal::BoolLiteral, Bool
         value << name
-      elsif get(node.to_s).class == Crystal::ArrayLiteral
+      when Crystal::ArrayLiteral, Array
         value << '&' << name << "[]"
+      when Crystal::Call
+        case node
+        when Crystal::Var
+          value << node.obj.to_s
+        else
+          value << node.to_s
+        end
       else
         value << '&' << name
       end

@@ -1,6 +1,7 @@
 module MacroTranspile
   module Functions
     private def transpile(method : Crystal::Def)
+      CURRENT_CONTEXT.push({symbol: :def, node: method})
       @@log.debug("Def: #{method.name}, #{method.args}")
 
       name = method.name
@@ -9,15 +10,15 @@ module MacroTranspile
 
       args = method.args.map_with_index do |arg, i|
         %(
-          #{arg.name} = #{name.to_s}_args[#{i}]
+          #{arg.name} = @#{name.to_s}_args[#{i}]
         ).as(String)
       end
 
       cr_code = %(
-        #{name}_args = [] of String
+        @#{name}_args = [] of String
         #{args.join("\n")}
       )
-
+      CURRENT_CONTEXT.pop
       %(
 // #{name}.txt
 // def #{name} (#{method.args.join(", ")})
@@ -54,6 +55,7 @@ module MacroTranspile
         # end
 
         obj.to_s.sub /\[\]/, "[#{arg}]"
+        # obj.to_s + "[#{arg}]"
       else
         if @@functions[method.to_s]?
           args = call.args.map_with_index do |arg, i|

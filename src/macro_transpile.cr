@@ -41,6 +41,8 @@ module MacroTranspile
     result
   end
 
+  CURRENT_CONTEXT = Array(NamedTuple(symbol: Symbol, node: Crystal::ASTNode)).new
+
   CONTEXTS = [:top]
 
   private def context(context, &blk)
@@ -56,35 +58,17 @@ module MacroTranspile
 end
 
 code = %q(
-  @rapidsneak : Bool
 
-  def check_locations(locations)
-    log locations
-    # CODE
+  @add_result : Number
+  @one : Number
+  @two : Number
+
+  def add(one : Int, two : Int)
+    @add_result = one + two
   end
 
-  check_locations(10)
-
-  chat = PLAYER
-
-  get = 0
-
-  stuff = [] of String
-  stuff[get]
-
-  if @rapidsneak
-    log("Rapidsneak OFF")
-    @rapidsneak = false
-    stop
-  else
-    log "Rapidsneak ON"
-    @rapidsneak = true
-    while @rapidsneak
-      keydown("sneak")
-      wait("1ms")
-      keyup("sneak")
-    end
-  end
+  add(2, 4)
+  log(@add_result)
 )
 
 puts MacroTranspile.parse(code)

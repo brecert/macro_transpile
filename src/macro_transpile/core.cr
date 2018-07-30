@@ -27,5 +27,13 @@ module MacroTranspile
       @@log.debug "Nop: ''"
       ""
     end
+
+    # private def transpile(node : Crystal::Return)
+    #   if node.exp && CURRENT_CONTEXT.last[:symbol] == :def
+    #     "&#{CURRENT_CONTEXT.last[:node]}_result = #{transpile node.exp};"
+    #   else
+    #     "a"
+    #   end
+    # end
   end
 end
