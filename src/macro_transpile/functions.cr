@@ -9,20 +9,14 @@ module MacroTranspile
       @@functions[name.to_s] = method
 
       args = method.args.map_with_index do |arg, i|
-        %(
-          #{arg.name} = @#{name.to_s}_args[#{i}]
-        ).as(String)
+        %(#{arg.name} = $$[#{i}]).as(String)
       end
 
-      cr_code = %(
-        @#{name}_args = [] of String
-        #{args.join("\n")}
-      )
       CURRENT_CONTEXT.pop
       %(
 // #{name}.txt
 // def #{name} (#{method.args.join(", ")})
-  #{parse(cr_code)}
+  #{args.join("\n")}
   #{transpile method.body}
 // end
 )
