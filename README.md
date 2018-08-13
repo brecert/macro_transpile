@@ -1,41 +1,7 @@
 # macro_transpile
 transpile a very limited subset of crystal to mkb language
 
-## Todo
-rewrite, the code is an awful mess right now, initially wrote after staying up 30 hours in an attempt to research the internals of crystal-lang
-
-automatic float calculation. (using a transpiler standard library of sorts)
-
-namespaces, namespaces for easy namespace naming for namespaces
-
-automatic file outputs, right now files need to manually be named if emulated method.
-
-classes, classes can be emulated by having inline methods. (emulated differently)
-too tired to think of a full solution, this is very unprofessional.
-
-
-## Usage
-dependencies
-  - Crystal 0.25.1
-  
-1. Clone the repository
-2. Built command.cr with `crystal build src/command.cr` 
-3. use the generated binary however you like
-
-## Contributing
-
-1. Fork it (<https://github.com/your-github-user/macro_transpile/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [brecert](https://github.com/brecert) Brecert - creator, maintainer
-
-
-## Examples
+## Example
 ```cr
 # Automatic Assignment
 # Automatic Typings
@@ -126,3 +92,37 @@ ENDIF;
 If you're wondering why @CALL and other comments are in there, it's easy to get lost in the code without the crystal code for reference, this just makes it easier to tell where it is.
 
 It also makes creating the correct files easier.
+
+## Todo
+rewrite, the code is an awful mess right now, initially wrote after staying up 30 hours in an attempt to research the internals of crystal-lang
+
+automatic float calculation. (using a transpiler standard library of sorts)
+
+namespaces, namespaces for easy namespace naming for namespaces
+
+automatic file outputs, right now files need to manually be named if emulated method.
+
+classes, classes can be emulated by having inline methods. (emulated differently)
+too tired to think of a full solution, this is very unprofessional.
+
+
+## Usage
+dependencies
+  - Crystal 0.25.1
+  
+1. Clone the repository
+2. Built command.cr with `crystal build src/command.cr` 
+3. use the generated binary however you like
+
+## Contributing
+
+1. Fork it (<https://github.com/your-github-user/macro_transpile/fork>)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
+
+## Contributors
+
+- [brecert](https://github.com/brecert) Brecert - creator, maintainer
+
