@@ -1,5 +1,5 @@
 # macro_transpile
-transpile a limited subset of crystal to mkb language
+transpile a very limited subset of crystal to mkb language
 
 ## Todo
 rewrite, the code is an awful mess right now, initially wrote after staying up 30 hours in an attempt to research the internals of crystal-lang
