@@ -1,0 +1,10 @@
+// add.txt
+// def add (number_one, number_two)
+
+&number_one = $$0
+&number_two = $$1
+%&number_one% + %&number_two%
+
+
+// add (2, 3)
+  EXEC(add.txt,add,2,3)

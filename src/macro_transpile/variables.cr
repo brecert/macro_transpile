@@ -51,6 +51,7 @@ module MacroTranspile
       name = node.to_s
 
       value = IO::Memory.new
+      # Dirty hack to remove @ from globals and reinsert it correctly in the mkb variable.
       if name.starts_with? '@'
         name = name.to_s.sub(/^@/, "")
         value << '@'
@@ -65,13 +66,13 @@ module MacroTranspile
         value << name
       when Crystal::ArrayLiteral, Array
         value << '&' << name << "[]"
-      when Crystal::Call
-        case node
-        when Crystal::Var
-          value << node.obj.to_s
-        else
-          value << node.to_s
-        end
+        # when Crystal::Call
+        #   case node
+        #   when Crystal::Var
+        #     value << "VAR: #{node.to_s}"
+        #   else
+        #     value << "VAR2: #{node.to_s}"
+        #   end
       else
         value << '&' << name
       end

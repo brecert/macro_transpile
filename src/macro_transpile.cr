@@ -37,7 +37,6 @@ module MacroTranspile
     node = Crystal::Expressions.from(parser.parse)
     result = ""
     result += transpile(node).strip
-    puts "-" * 3
     result
   end
 
@@ -56,19 +55,3 @@ module MacroTranspile
     CONTEXTS.last == context
   end
 end
-
-code = %q(
-
-  @add_result : Number
-  @one : Number
-  @two : Number
-
-  def add(one : Int, two : Int)
-    @add_result = one + two
-  end
-
-  add(2, 4)
-  log(@add_result)
-)
-
-puts MacroTranspile.parse(code)

@@ -4,6 +4,13 @@ module AST
 
   class InitialInstanceVar < Crystal::InstanceVar
   end
+
+  class SpecialInput < Crystal::StringLiteral
+    property type : Crystal::ASTNode?
+
+    def initialize(@value, @type)
+    end
+  end
 end
 
 module MacroTranspile

@@ -9,17 +9,25 @@ module MacroTranspile
       @@functions[name.to_s] = method
 
       args = method.args.map_with_index do |arg, i|
-        %(#{arg.name} = $$[#{i}]).as(String)
+        assign(arg.name, arg)
+        %(#{transpile arg} = $$#{i}).as(String)
       end
 
       CURRENT_CONTEXT.pop
       %(
 // #{name}.txt
 // def #{name} (#{method.args.join(", ")})
-  #{args.join("\n")}
-  #{transpile method.body}
-// end
+
+#{args.join("\n")}
+#{transpile method.body}
 )
+    end
+
+    private def transpile(arg : Crystal::Arg)
+      io = IO::Memory.new
+      io << "#{variable arg.name}"
+      io << " = #{arg.default_value}" if arg.default_value
+      io.to_s
     end
 
     private def transpile(call : Crystal::Call)
@@ -59,11 +67,10 @@ module MacroTranspile
 
           method_arguments = "#{method}_args = [#{args.join(",")}]"
 
-          "
+          %(
 // #{method} (#{args.join(", ")})
-  #{method_arguments}
-  $$<#{method}.txt>
-  "
+  EXEC(#{method}.txt,#{method}#{',' if !args.empty?}#{args.map { |a| transpile a }.join ","})
+)
         else
           args = transpile call.args
 
