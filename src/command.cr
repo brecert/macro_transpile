@@ -1,6 +1,6 @@
 require "./macro_transpile"
-require "file"
 require "option_parser"
+require "file_utils"
 
 class MacroTranspile::Command
   USAGE = <<-USAGE
@@ -29,7 +29,7 @@ class MacroTranspile::Command
       puts USAGE
       exit
     when "init".starts_with?(command)
-      puts "Oops not finished.."
+      puts "The init command is not finished yet."
     when "transpile".starts_with?(command)
       options.shift
       transpile
@@ -50,9 +50,9 @@ class MacroTranspile::Command
     option_parser = OptionParser.parse(options) do |opts|
       opts.banner = "Usage: macr #{command} [options] [program file] [--] [arguments]\n\nOptions:"
 
-      # opts.on("-d", "--debug", "Print debug info") do
-      #   transpiler.log_level = Logger::Debug
-      # end
+      opts.on("-d", "--debug", "Print debug info") do
+        transpiler.log.level = Logger::DEBUG
+      end
 
       opts.on("-o ", "Output filename") do |an_output_filename|
         opt_output_filename = an_output_filename
@@ -83,14 +83,23 @@ class MacroTranspile::Command
       error "can't use `#{output_filename}` as output filename because it's a directory"
     end
 
-    puts output_filename, filenames, arguments
-
     input = filenames[0]
     output output_filename, transpiler.parse(File.read(input))
   end
 
   private def output(file, content)
-    File.write file, content
+    # file_name = folder
+
+    # spl = content.split("@NEW_METHOD")
+    # spl.each do |text|
+    #   m = /@NAME\s([^\n]+)/.match(text).try &.[1]
+    #   file_name += "/method/#{m}"
+    # end
+    # FileUtils.mkdir_p(file_name)
+    # puts file_name
+    # # File.touch($1)
+    # # File.write($1, text)
+    File.write(file, content)
   end
 
   private def error(msg, exit_code = 1)

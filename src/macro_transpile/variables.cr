@@ -28,7 +28,7 @@ module MacroTranspile
     end
 
     private def transpile(node : AST::InitialInstanceVar)
-      "A @#{variable node}"
+      "@#{variable node}"
     end
 
     # Global @

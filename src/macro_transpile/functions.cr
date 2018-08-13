@@ -15,9 +15,8 @@ module MacroTranspile
 
       CURRENT_CONTEXT.pop
       %(
-// #{name}.txt
-// def #{name} (#{method.args.join(", ")})
-
+// @FILE #{name}.txt
+// @METHOD #{name}(#{method.args.join(", ")})
 #{args.join("\n")}
 #{transpile method.body}
 )
@@ -68,8 +67,8 @@ module MacroTranspile
           method_arguments = "#{method}_args = [#{args.join(",")}]"
 
           %(
-// #{method} (#{args.join(", ")})
-  EXEC(#{method}.txt,#{method}#{',' if !args.empty?}#{args.map { |a| transpile a }.join ","})
+// @CALL #{method}
+EXEC("#{method}.txt","#{method}"#{',' if !args.empty?}#{args.map { |a| transpile a }.join ","})
 )
         else
           args = transpile call.args

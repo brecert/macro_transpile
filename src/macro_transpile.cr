@@ -18,11 +18,15 @@ module MacroTranspile
   extend self
 
   @@log = Logger.new(STDOUT)
-  @@log.level = Logger::DEBUG
+  @@log.level = Logger::INFO
 
   @@log.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
     label = severity.unknown? ? "ANY" : severity.to_s
     io << label.rjust(5) << progname << ": " << message
+  end
+
+  def log
+    @@log
   end
 
   @@config = {
